@@ -1,17 +1,62 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { useState, useEffect, useCallback } from "react";
+import ReactDOM from "react-dom/client";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// 컴포넌트 import
+import AddApointments from "./Components/AddApointment";
+import AddInfo from "./Components/AddInfo";
+import Search from "./Components/Search";
+
+// 목업
+// import appointData from "./data.json";
+
+// 소스파일
+import "./index.css";
+import { BiCalendarPlus } from "react-icons/bi";
+
+function App() {
+  // state
+
+  // list
+  const [appointList, setAppointList] = useState([]);
+  // serch
+
+  // callBack
+  const fetchData = useCallback(() => {
+    fetch("./data.json")
+      .then(Response => Response.json())
+      .then(data => setAppointList(data));
+  }, []);
+
+  // useEffect
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return (
+    <article>
+      <h3>
+        <BiCalendarPlus />
+        예약시스템
+      </h3>
+      <AddApointments />
+      <Search />
+      <div id="list">
+        <ul>
+          {appointList.map((appointment) => (
+            <AddInfo 
+            key={appointment.id} 
+            appoint={appointment} 
+            onDeletAppoint= {appointment.id}/>
+          ))}
+        </ul>
+      </div>
+    </article>
+  );
+}
+
+const root = ReactDOM.createRoot(document.querySelector("#root"));
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
