@@ -1,7 +1,7 @@
 import { BiTrash } from "react-icons/bi";
 // 목업 파일 -> fetch
 
-function AddInfo({ appoint }) {
+function AddInfo({ appoint, onDeleteAppoint }) {
   return (
     <li>
       <dl>
@@ -15,7 +15,7 @@ function AddInfo({ appoint }) {
 
       <p>
         <button>
-          <BiTrash onClick={()=>{}}/>
+          <BiTrash onClick={()=> onDeleteAppoint(appoint.id)}/>
         </button>
       </p>
     </li>

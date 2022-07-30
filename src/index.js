@@ -46,7 +46,9 @@ function App() {
             <AddInfo 
             key={appointment.id} 
             appoint={appointment} 
-            onDeletAppoint= {appointment.id}/>
+            onDeleteAppoint= {
+              appointmentId => setAppointList(appointList.filter(appointment => appointment.id !== appointmentId))
+            }/>
           ))}
         </ul>
       </div>
